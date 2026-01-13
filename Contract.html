@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Contract — Payment Schedule (North Cyprus)</title>
+<style>
+  :root{ --bg:#f6f7f9; --paper:#ffffff; --muted:#6b7280; --accent:#0b5cff; --danger:#b91c1c; }
+  html,body{height:100%;margin:0;background:var(--bg);font-family:Georgia, 'Times New Roman', Times, serif;color:#111}
+  .page{max-width:900px;margin:36px auto;padding:28px 40px;background:var(--paper);border:1px solid #e8e8e8;border-radius:10px;position:relative;box-shadow:0 10px 30px rgba(15,23,42,0.06)}
+  /* official watermark */
+  .page::before{
+    content:"OFFICIAL DOCUMENT";
+    position:absolute;left:50%;top:48%;transform:translate(-50%,-50%) rotate(-25deg);
+    font-size:48px;color:rgba(150,150,150,0.10);letter-spacing:4px;pointer-events:none;white-space:nowrap;
+  }
+  .letterhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;border-bottom:1px solid #eef2f7;padding-bottom:12px}
+  .org-name{font-weight:900;font-size:18px}
+  .org-details{font-size:12px;color:var(--muted)}
+  header{display:block}
+  .org-name{color:var(--accent)}
+  h1{font-size:20px;margin:6px 0 0 0;font-weight:800;color:#0b3a8a}
+  .meta{color:var(--muted);font-size:13px;margin-top:6px}
+  .box{padding:14px;border-radius:8px;border:1px solid #eef2f7;background:#fbfdff}
+  .label{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;margin-bottom:6px}
+  .field{font-size:15px;margin-bottom:8px}
+  .strong{font-weight:700}
+  table{width:100%;border-collapse:collapse;margin-top:8px}
+  th,td{border:1px solid #e6eef6;padding:8px;text-align:left}
+  th{background:#f8fafc}
+  .summary{margin-top:18px;padding:14px;border-radius:8px;background:#f8fafc;border:1px solid #e6eef6}
+  .controls{margin-top:18px;display:flex;gap:8px;justify-content:flex-end}
+  button{background:var(--accent);color:#fff;border:none;padding:10px 14px;border-radius:7px;cursor:pointer;font-weight:700}
+  @media (max-width:760px){ header{flex-direction:column} }
+  @media print{ .controls { display:none !important; } .page{box-shadow:none;border:none;margin:0;border-radius:0} .page::before{color:rgba(150,150,150,0.06);font-size:36px} }
+</style>
+</head>
+<body>
+  <main class="page" role="main" aria-labelledby="title">
+    <header>
+      <div class="letterhead">
+        <div>
+          <div class="org-name"> Republic of Turkey Ministry of Development.</div>
+          <div class="org-details">Address: Istanbul, Turkey· Phone: +90 392 000 0000·</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:12px;color:#444">Contract No:</div>
+          <div style="font-weight:800;color:#111;margin-top:6px">TRMFA-CT1090</div>
+          <div style="font-size:12px;margin-top:8px;color:var(--muted)">Effective Date: After Negotiation</div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px">
+        <div>
+          <h1 id="title">Contract — Payment Schedule for Remaining Batteries</h1>
+          <div class="meta">Project: Completion — Northern, Cyprus</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:12px;color:#444">Contract Amount:</div>
+          <div style="font-weight:800;color:#0b5cff;margin-top:6px">€250,000.00</div>
+        </div>
+      </div>
+    </header>
+
+    <section style="margin-top:18px">
+      <div class="box">
+        <div class="label">Contract Summary</div>
+        <div class="field"><span class="strong">Description:</span> Payment for remaining batteries to complete the project in Northern, Cyprus.</div>
+        <div class="field"><span class="strong">Total Balance Amount:</span> €250,000.00</div>
+      </div>
+
+      <div class="box" style="margin-top:12px">
+        <div class="label">Payment Breakdown</div>
+        <table id="payments">
+          <tr><th>Date</th><th>Amount (€)</th><th>Receiver Name</th></tr>
+          <tr><td>01 Dec 2025</td><td>€5,000.00</td><td>Siddik Goktemiz</td></tr>
+          <tr><td>15 Dec 2025</td><td>€3,000.00</td><td>Siddik Goktemiz</td></tr>
+          <tr><td>06 Jan 2026</td><td>€1,000.00</td><td>Masur Tas</td></tr>
+          <tr><td>06 Jan 2026</td><td>€1,000.00</td><td>Masur Tas</td></tr>
+          <tr><td>09 Jan 2026</td><td>€1,000.00</td><td>Masur Tas</td></tr>
+        </table>
+
+        <div class="summary" style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div class="field"><span class="strong">Total Paid:</span> <span id="totalPaid">€0.00</span></div>
+            <div class="field"><span class="strong">Balance Remaining:</span> <span id="balance">€0.00</span></div>
+          </div>
+            <div style="text-align:right;color:var(--muted)">
+              <div style="font-size:12px">Note: Payment entries are recorded as received. Finance verification required for final settlement.</div>
+            </div>
+         
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-top:18px;display:flex;gap:18px;flex-wrap:wrap">
+      <div style="flex:1 1 48%" class="box">
+        <div class="label">Authorised Signatory</div>
+        <div style="height:86px;border-bottom:1px solid #e6eef6;margin-bottom:8px"></div>
+        <div class="field"><span class="strong">Name:</span> _________________________</div>
+        <div class="field"><span class="strong">Title:</span> Authorized Representative</div>
+        <div class="field"><span class="strong">Date:</span> _________________________</div>
+      </div>
+
+      <div style="flex:1 1 48%" class="box">
+        <div class="label">Witness</div>
+        <div style="height:86px;border-bottom:1px solid #e6eef6;margin-bottom:8px"></div>
+        <div class="field"><span class="strong">Name:</span> _________________________</div>
+        <div class="field"><span class="strong">Title:</span> Witness</div>
+        <div class="field"><span class="strong">Date:</span> _________________________</div>
+      </div>
+    </section>
+
+    <div class="footer" style="margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:13px">
+      <div>Republic of Turkey Ministry of Development</div>
+      <div class="controls">
+        <button onclick="window.print()">Print / Save as PDF</button>
+        <button onclick="computeTotals()" class="secondary" style="background:transparent;border:1px solid var(--accent);color:var(--accent)">Recalculate</button>
+      </div>
+    </div>
+  </main>
+
+<script>
+  function parseAmount(text){
+    if(!text) return 0;
+    return Number(text.replace(/[^0-9.-]+/g,"")) || 0;
+  }
+
+  function computeTotals(){
+    const rows = document.querySelectorAll('#payments tr');
+    let total = 0;
+    rows.forEach((r, i)=>{
+      if(i===0) return; // header
+      const amtText = r.cells[1].textContent.trim();
+      total += parseAmount(amtText);
+    });
+    const contract = 250000;
+    const balance = contract - total;
+    document.getElementById('totalPaid').textContent = total.toLocaleString('en-GB', {style:'currency',currency:'EUR'});
+    document.getElementById('balance').textContent = balance.toLocaleString('en-GB', {style:'currency',currency:'EUR'});
+  }
+
+  // Run on load
+  computeTotals();
+</script>
+</body>
+</html>

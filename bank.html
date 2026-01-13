@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bail Payment Receipt </title>
+  <style>
+    :root{
+      --accent:#0b5cff;
+      --muted:#6b7280;
+      --paper:#ffffff;
+      --bg:#f3f4f6;
+      --border:#e5e7eb;
+      --danger:#b91c1c;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;margin:0;background:var(--bg);}
+    .container{max-width:900px;margin:32px auto;padding:24px;background:var(--paper);border:1px solid var(--border);box-shadow:0 6px 18px rgba(15,23,42,0.06);border-radius:8px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .warning{background:linear-gradient(90deg, rgba(217,70,70,0.06), rgba(245,158,11,0.04));border-left:4px solid var(--danger);padding:10px 12px;border-radius:6px;color:var(--danger);font-weight:600}
+    h1{font-size:18px;margin:0}
+    .meta{color:var(--muted);font-size:13px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+    label{display:block;font-size:13px;color:#111827;margin-bottom:6px;font-weight:600}
+    input[type="text"], input[type="date"], textarea, select{width:100%;padding:10px;border-radius:6px;border:1px solid var(--border);background:#fff;font-size:14px}
+    textarea{min-height:90px;resize:vertical}
+    .section{padding:14px;border:1px dashed var(--border);border-radius:8px;background:#fbfdff}
+    .full{grid-column:1 / -1}
+    .label-muted{font-weight:600;color:var(--muted);font-size:12px}
+    .footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:12px}
+    .btn{background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;border:none;font-weight:700;cursor:pointer}
+    .btn.secondary{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+    .note{font-size:12px;color:var(--muted)}
+    pre.sample{background:#111827;color:#fff;padding:12px;border-radius:6px;overflow:auto;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace}
+
+    /* Print styles */
+    @media print{
+      body{background:#fff}
+      .container{box-shadow:none;margin:0;border:none}
+      .btn, .warning{display:none}
+      .topbar{justify-content:flex-start}
+      .grid{gap:10px}
+    }
+
+    /* Responsive */
+    @media (max-width:700px){
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main">
+    <div class="topbar">
+      <div>
+        <h1>Bail Payment Receipt</h1>
+        <div class="meta">For judicial bail/surety payments related to criminal cases</div>
+      </div>
+        <div class="warning"> Please ensure all information is accurate and complete.</div>
+    </div>
+
+    <div style="margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div>
+        <div class="label-muted">Issuing Authority</div>
+        <div style="font-weight:700"> HSK, Lutfi Akadli. Head of Department</div>
+      </div>
+      <div style="text-align:right">
+        <div class="label-muted">Receipt No.</div>
+        <div style="font-weight:700">249-2025</div>
+        <div style="height:6px"></div>
+        <div class="label-muted">Date Issued</div>
+        <div style="font-weight:700">[06/10/2025]</div>
+      </div>
+    </div>
+
+    <form id="receiptForm">
+      <div class="grid" style="margin-top:18px">
+        <div class="section">
+          <div class="label-muted">PAYER</div>
+          <label for="payerName">Name</label>
+          <input id="payerName" name="payerName" type="text" placeholder="JAMES STERLING" />
+
+          <label for="payerId" style="margin-top:10px">ID No.</label>
+          <input id="payerId" name="payerId" type="text" placeholder="B.T 32003299212" />
+
+          <label for="payerAddress" style="margin-top:10px">Address</label>
+          <textarea id="payerAddress" name="payerAddress" placeholder="Istanbul, Turkey"></textarea>
+
+          <label for="payerPhone" style="margin-top:10px">Phone</label>
+          <input id="payerPhone" name="payerPhone" type="text" placeholder="+447465794011" />
+        </div>
+
+        <div class="section">
+          <div class="label-muted"> DEFENDANT</div>
+          <label for="subjectName">Name</label>
+          <input id="subjectName" name="subjectName" type="text" placeholder="PETER NISSINEN" />
+
+          <label for="caseNo" style="margin-top:10px">Case / File No.</label>
+          <input id="caseNo" name="caseNo" type="text" placeholder="TRMFA-CT1000" />
+
+          <label for="custodyLocation" style="margin-top:10px">Custody Location</label>
+          <input id="custodyLocation" name="custodyLocation" type="text" placeholder="Istanbul Prison" />
+
+            
+        </div>
+
+        <div class="section full">
+          <div class="label-muted">PAYMENT</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div style="flex:1 1 200px">
+              <label for="amountNum">Amount (figures)</label>
+              <input id="amountNum" name="amountNum" type="text" placeholder=" £9,000.00" />
+            </div>
+            <div style="flex:2 1 300px">
+              <label for="amountWords">Amount (in words)</label>
+              <input id="amountWords" name="amountWords" type="text" placeholder="Nine Thousand British Pounds" />
+            </div>
+            <div style="flex:1 1 180px">
+              <label for="paymentMethod">Payment Method</label>
+              <select id="paymentMethod" name="paymentMethod">
+                <option>Cash</option>
+                <option>Bank Transfer / EFT</option>
+                <option>Card</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
+           
+            <div style="flex:1 1 260px">
+              <label for="refNo">Transaction / Reference No.</label>
+              <input id="refNo" name="refNo" type="text" placeholder="479010233-884482-2383" />
+            </div>
+            <div style="flex:1 1 160px">
+              <label for="paymentDate">Payment Date</label>
+              <input id="paymentDate" name="paymentDate" type="date" />
+            </div>
+          </div>
+        </div>
+
+        <div class="section full">
+          <div class="label-muted">PURPOSE</div>
+          <label for="purpose">Purpose of Payment</label>
+          <input id="purpose" name="purpose" type="text" value="Bail / Surety (in accordance with bail conditions)" />
+
+          <div style="display:flex;gap:18px;margin-top:12px;align-items:flex-start;flex-wrap:wrap">
+            <div style="flex:1 1 320px">
+              <label class="label-muted">ISSUED BY (OFFICIAL)</label>
+              <label for="issuerName">Issuer Name</label>
+              <input id="issuerName" name="issuerName" type="text" placeholder="Official's Full Name" />
+
+              <label for="issuerPosition" style="margin-top:10px">Position</label>
+              <input id="issuerPosition" name="issuerPosition" type="text" placeholder="Officer / Cashier / Clerk" />
+            </div>
+
+            <div style="flex:1 1 260px">
+              <div style="height:56px"></div>
+              <div class="label-muted">Official Stamp Area</div>
+              <div style="height:110px;border:1px dashed var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;margin-top:8px">OFFICIAL STAMP / SEAL — SAMPLE ONLY</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:18px;margin-top:18px;align-items:center;flex-wrap:wrap">
+            <div style="flex:1 1 320px">
+              <label class="label-muted">ACKNOWLEDGEMENTS</label>
+              <label for="payerSig">Payer Signature (print)</label>
+              <input id="payerSig" name="payerSig" type="text" placeholder="Payer Name (printed)" />
+            </div>
+            <div style="flex:1 1 320px">
+              <label for="officialSig">Official Signature (print)</label>
+              <input id="officialSig" name="officialSig" type="text" placeholder="Official Name (printed)" />
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="footer">
+        <div>
+          <div class="note">This is a sample template for illustration only. Do NOT use as an official document.</div>
+          <div class="note">For an authentic receipt verify payment and issuance with the relevant judicial authority.</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button type="button" class="btn" onclick="printReceipt()">Print / Save as PDF</button>
+          <button type="button" class="btn secondary" onclick="fillExample()">Fill Example Data</button>
+        </div>
+      </div>
+    </form>
+
+    <hr style="margin-top:18px;border:none;border-top:1px solid var(--border)" />
+    <div style="margin-top:12px;font-size:12px;color:var(--muted)">Generated: Sample HTML template — not an official form.</div>
+  </div>
+
+  <script>
+    function printReceipt(){
+      window.print();
+    }
+    function fillExample(){
+      document.getElementById('payerName').value = 'John Doe';
+      document.getElementById('payerId').value = '12345678901';
+      document.getElementById('payerAddress').value = 'Sample Street 10, Istanbul, Turkey';
+      document.getElementById('payerPhone').value = '+90-555-123-4567';
+      document.getElementById('subjectName').value = 'Ahmet Yilmaz';
+      document.getElementById('caseNo').value = '2025/341';
+      document.getElementById('custodyLocation').value = 'Istanbul Detention Center';
+      document.getElementById('legalBasis').value = 'Turkish Penal Code — Article X';
+      document.getElementById('amountNum').value = '₺ 10,000.00';
+      document.getElementById('amountWords').value = 'Ten thousand Turkish Lira';
+      document.getElementById('paymentMethod').value = 'Bank Transfer / EFT';
+      document.getElementById('bankInfo').value = 'Sample Bank - Kadikoy Branch';
+      document.getElementById('refNo').value = 'TRX-20250901-9988';
+      document.getElementById('paymentDate').value = new Date().toISOString().slice(0,10);
+      document.getElementById('issuerName').value = 'Court Cashier';
+      document.getElementById('issuerPosition').value = 'Cashier';
+      document.getElementById('payerSig').value = 'John Doe';
+      document.getElementById('officialSig').value = 'Court Cashier';
+    }
+  </script>
+</body>
+</html>

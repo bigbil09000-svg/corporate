@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veridian Legal - Static HTML</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'brand-lime': '#A3E635',
+            'brand-dark': '#111827',
+            'brand-gray': '#1F2937'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="bg-brand-dark text-gray-300 font-sans leading-normal tracking-tight">
+
+<footer class="bg-black py-8">
+  <div class="container mx-auto px-6 text-center text-gray-500">
+    <p>&copy; 2025 Veridian Legal. All Rights Reserved.</p>
+    <p class="text-sm mt-2">This is a fictional website created for demonstration purposes.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Veridian Legal - Static HTML</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'brand-lime': '#A3E635',
+            'brand-dark': '#111827',
+            'brand-gray': '#1F2937'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="bg-brand-dark text-gray-300 font-sans leading-normal tracking-tight">
+
+<header class="fixed w-full top-0 z-50 transition-colors duration-300 bg-black/70 backdrop-blur">
+  <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="#hero" class="text-2xl font-extrabold text-white">Veridian<span class="text-brand-lime">Legal</span></a>
+    <nav class="space-x-6 hidden md:block">
+      <a href="#about" class="text-gray-300 hover:text-brand-lime transition-colors duration-200">About</a>
+      <a href="#practice-areas" class="text-gray-300 hover:text-brand-lime transition-colors duration-200">Practice Areas</a>
+      <a href="#team" class="text-gray-300 hover:text-brand-lime transition-colors duration-200">Our Team</a>
+      <a href="#testimonials" class="text-gray-300 hover:text-brand-lime transition-colors duration-200">Testimonials</a>
+      <a href="#contact" class="text-gray-300 hover:text-brand-lime transition-colors duration-200">Contact</a>
+    </nav>
+  </div>
+</header>
+
+</body>
+</html>

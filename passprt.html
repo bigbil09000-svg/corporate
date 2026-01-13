@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Payment Receipt (Generic)</title>
+  <style>
+    :root{
+      --accent:#155e75;
+      --muted:#6b7280;
+      --paper:#ffffff;
+      --bg:#f3f4f6;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    body { margin:0; padding:24px; background:var(--bg); color:#0f172a; }
+    .container { max-width:900px; margin:0 auto; }
+    .card { background:var(--paper); border-radius:12px; padding:20px; box-shadow:0 6px 18px rgba(15,23,42,0.08); }
+    header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:16px; }
+    header h1 { font-size:20px; margin:0; color:var(--accent); }
+    .meta { text-align:right; color:var(--muted); font-size:13px; }
+    form { display:grid; grid-template-columns:1fr 340px; gap:18px; }
+    .left { padding-right:8px; }
+    label { display:block; font-size:13px; color:#111827; margin-bottom:6px; }
+    input[type="text"], input[type="date"], input[type="number"], select, textarea {
+      width:100%; padding:8px 10px; border-radius:8px; border:1px solid #e6e7eb; font-size:14px;
+      box-sizing:border-box;
+    }
+    textarea { min-height:80px; resize:vertical; }
+    .field { margin-bottom:12px; }
+    .section-title { font-weight:600; margin:8px 0 6px; color:#0b1220; font-size:14px; }
+    .payment-methods label { display:flex; gap:8px; align-items:center; margin-bottom:6px; font-size:14px; }
+    .actions { display:flex; gap:8px; justify-content:flex-end; margin-top:12px; }
+    button { background:var(--accent); color:white; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:600; }
+    button.secondary { background:#e6eef2; color:#083344; }
+    /* printable view */
+    .preview { background:transparent; padding:16px; border-radius:8px; display:none; }
+    .preview .row { display:flex; justify-content:space-between; gap:12px; padding:6px 0; border-bottom:1px dashed #e6eef2; }
+    .hide-print { display:block; }
+    @media print {
+      body { background:white; }
+      .hide-print { display:none !important; }
+      .preview { display:block !important; }
+      .card { box-shadow:none; padding:0; border-radius:0; }
+      header, form, .actions { display:none; }
+    }
+
+    /* small helper */
+    .small { font-size:13px; color:var(--muted); }
+    /* PDF action buttons */
+    .pdf-actions{ display:flex; gap:8px; align-items:center; }
+    .pdf-actions .btn{ background:var(--accent); color:#fff; border:none; padding:8px 12px; border-radius:8px; font-weight:700; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
+    .pdf-actions .btn.secondary{ background:#fff; color:var(--accent); border:1px solid #e6eef2; font-weight:600; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <header>
+        <div>
+          <h1>Payment Receipt </h1>
+          <div class="small">This is a confirmation of payment receipt.</div>
+        </div>
+        <div class="meta">
+          <div>Receipt No.: <span id="displayReceiptNo">—</span></div>
+          <div>Date: <span id="displayDate">—</span></div>
+        </div>
+        <!-- PDF actions: download link and print/save as PDF button -->
+        <div style="margin-left:12px;" class="hide-print">
+          <div class="pdf-actions" aria-hidden="false">
+            <a href="passprt.pdf" download class="btn" aria-label="Download PDF of this receipt">Download PDF</a>
+            <button type="button" class="btn secondary" onclick="printPreview()" aria-label="Print or save this receipt">Print / Save PDF</button>
+          </div>
+        </div>
+      </header>
+
+      <form id="receiptForm" onsubmit="return false;">
+        <div class="left">
+          <div class="field">
+            <label for="payerName">Payer Full Name</label>
+            <input id="payerName" type="text" placeholder="e.g. Ahmet Yılmaz" />
+          </div>
+
+          <div class="field" style="display:flex; gap:8px;">
+            <div style="flex:1">
+              <label for="nationality">Nationality</label>
+              <input id="nationality" type="text" placeholder="e.g. Turkish" />
+            </div>
+            <div style="width:180px;">
+              <label for="idNumber">ID / Passport No.</label>
+              <input id="idNumber" type="text" placeholder="ID / Passport" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="payerAddress">Address</label>
+            <textarea id="payerAddress" placeholder="Address"></textarea>
+          </div>
+
+          <div class="field">
+            <label class="section-title">Payment Details</label>
+            <label for="purpose">Purpose of Payment</label>
+            <input id="purpose" type="text" placeholder="e.g. Application fee, Service fee" />
+          </div>
+
+          <div class="field" style="display:flex; gap:8px;">
+            <div style="flex:1">
+              <label for="referenceNo">Reference / Application No. (if any)</label>
+              <input id="referenceNo" type="text" placeholder="Ref number" />
+            </div>
+            <div style="width:140px;">
+              <label for="date">Date</label>
+              <input id="date" type="date" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="notes">Additional Notes</label>
+            <textarea id="notes" placeholder="Notes..."></textarea>
+          </div>
+        </div>
+
+        <aside>
+          <div class="field">
+            <label for="amount">Amount</label>
+            <input id="amount" type="number" step="0.01" placeholder="0.00" />
+          </div>
+
+          <div class="field">
+            <label for="currency">Currency</label>
+            <select id="currency">
+              <option value="TRY">₺ Turkish Lira (TRY)</option>
+              <option value="EUR">€ Euro (EUR)</option>
+              <option value="USD">$ US Dollar (USD)</option>
+              <option value="GBP">£ British Pound (GBP)</option>
+              <option value="OTHER">Other</option>
+            </select>
+          </div>
+
+          <div class="field payment-methods">
+            <label class="section-title">Payment Method</label>
+            <label><input type="radio" name="method" value="Cash" checked /> Cash</label>
+            <label><input type="radio" name="method" value="Bank Transfer" /> Bank Transfer</label>
+            <label><input type="radio" name="method" value="Credit Card" /> Credit Card</label>
+            <label><input type="radio" name="method" value="Online" /> Online Payment</label>
+          </div>
+
+          <div class="field">
+            <label for="recipient">Recipient Institution / Company</label>
+            <input id="recipient" type="text" placeholder="e.g. Example Ltd." />
+          </div>
+
+          <div class="field">
+            <label for="receiverOfficer">Authorized Officer (Name & Title)</label>
+            <input id="receiverOfficer" type="text" placeholder="Officer name & title" />
+          </div>
+
+          <div class="field">
+            <label for="phoneEmail">Phone / Email</label>
+            <input id="phoneEmail" type="text" placeholder="Phone or email" />
+          </div>
+
+          <div style="margin-top:10px;">
+            <label class="section-title">Authorized Signature</label>
+            <input id="signature" type="text" placeholder="Name typed or 'Signed by ...'"/>
+            <div class="small" style="margin-top:6px;">(This field is for a typed name. For official use, obtain a handwritten signature.)</div>
+          </div>
+
+          <div class="actions hide-print" style="margin-top:16px;">
+            <button type="button" onclick="renderPreview()">Preview</button>
+          </div>
+        </aside>
+      </form>
+
+      <!-- printable preview (hidden during editing, shown when printing) -->
+      <div class="preview" id="printPreview" aria-hidden="true" role="region" style="margin-top:18px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div>
+            <strong id="p_title" style="font-size:18px;"></strong><br>
+            <span id="p_subtitle" class="small"></span>
+          </div>
+          <div style="text-align:right;">
+            <div>Receipt No.: <strong id="p_receiptNo">—</strong></div>
+            <div>Date: <strong id="p_date">—</strong></div>
+          </div>
+        </div>
+
+        <div class="row" style="display:block; border-bottom:0;">
+          <div style="display:flex; gap:18px; margin-bottom:8px;">
+            <div style="flex:1;">
+              <div><strong>Payer</strong></div>
+              <div id="p_payerName">—</div>
+              <div id="p_nationality" class="small">—</div>
+              <div id="p_id" class="small">—</div>
+              <div id="p_address" class="small">—</div>
+            </div>
+            <div style="width:300px;">
+              <div><strong>Payment</strong></div>
+              <div>Purpose: <span id="p_purpose">—</span></div>
+              <div>Ref No.: <span id="p_ref">—</span></div>
+              <div>Amount: <span id="p_amount">—</span></div>
+              <div>Method: <span id="p_method">—</span></div>
+            </div>
+          </div>
+
+          <div style="margin-top:8px;">
+            <div><strong>Recipient</strong></div>
+            <div id="p_recipient">—</div>
+            <div id="p_receiverOfficer" class="small">—</div>
+            <div id="p_phoneEmail" class="small">—</div>
+          </div>
+
+          <div style="margin-top:18px; display:flex; justify-content:space-between; align-items:center;">
+            <div style="max-width:65%;">
+              <div><strong>Notes</strong></div>
+              <div id="p_notes" class="small">—</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="height:60px; width:260px; border-bottom:1px solid #111827; margin-bottom:6px;"></div>
+              <div class="small">Authorized Signature & Stamp</div>
+              <div id="p_signature" class="small" style="margin-top:6px;"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div> <!-- card -->
+  </div> <!-- container -->
+
+  <script>
+    // helper to format date to yyyy-mm-dd for display
+    function formatDateISO(d){
+      if(!d) return '—';
+      const date = new Date(d);
+      if (isNaN(date)) return d;
+      return date.toLocaleDateString();
+    }
+
+    // Update preview fields from current form values. Generates a receipt number only when requested.
+    function updatePreviewFields(generateReceiptIfMissing = false){
+      const receiptNoEl = document.getElementById('displayReceiptNo');
+      const now = document.getElementById('date').value || new Date().toISOString().slice(0,10);
+
+      if (generateReceiptIfMissing && (!receiptNoEl.textContent || receiptNoEl.textContent === '—')){
+        receiptNoEl.textContent = Math.floor(100000 + Math.random()*900000);
+      }
+
+      // header
+      document.getElementById('displayDate').textContent = formatDateISO(now);
+
+      // preview fields
+      document.getElementById('p_receiptNo').textContent = receiptNoEl.textContent || '—';
+      document.getElementById('p_date').textContent = formatDateISO(now);
+  // title/subtitle: prefer the page header text, fallback to document.title
+  const pageTitle = (document.querySelector('header h1')?.textContent || document.title || 'Payment Receipt').trim();
+  const pageSubtitle = (document.querySelector('header .small')?.textContent || '').trim();
+  document.getElementById('p_title').textContent = pageTitle;
+  document.getElementById('p_subtitle').textContent = pageSubtitle;
+      document.getElementById('p_payerName').textContent = document.getElementById('payerName').value || '—';
+      document.getElementById('p_nationality').textContent = document.getElementById('nationality').value ? 'Nationality: ' + document.getElementById('nationality').value : '';
+      document.getElementById('p_id').textContent = document.getElementById('idNumber').value ? 'ID: ' + document.getElementById('idNumber').value : '';
+      document.getElementById('p_address').textContent = document.getElementById('payerAddress').value || '';
+
+      document.getElementById('p_purpose').textContent = document.getElementById('purpose').value || '—';
+      document.getElementById('p_ref').textContent = document.getElementById('referenceNo').value || '—';
+
+      const amt = document.getElementById('amount').value;
+      const cur = document.getElementById('currency').value;
+      document.getElementById('p_amount').textContent = (amt ? (amt + ' ' + cur) : '—');
+
+      const method = document.querySelector('input[name="method"]:checked')?.value || '—';
+      document.getElementById('p_method').textContent = method;
+
+      document.getElementById('p_recipient').textContent = document.getElementById('recipient').value || '—';
+      document.getElementById('p_receiverOfficer').textContent = document.getElementById('receiverOfficer').value || '';
+      document.getElementById('p_phoneEmail').textContent = document.getElementById('phoneEmail').value || '';
+
+      document.getElementById('p_notes').textContent = document.getElementById('notes').value || '—';
+      document.getElementById('p_signature').textContent = document.getElementById('signature').value || '';
+    }
+
+    function renderPreview(){
+      // update fields and generate a receipt number if missing
+      updatePreviewFields(true);
+      // show preview block
+      document.getElementById('printPreview').style.display = 'block';
+    }
+
+    // Print handler: ensure preview is up-to-date (and generate receipt if missing),
+    // show preview so print CSS picks it up, then open print dialog.
+    function printPreview(){
+      try{
+        updatePreviewFields(true);
+      }catch(e){
+        console.error('Failed updating preview before print', e);
+      }
+      document.getElementById('printPreview').style.display = 'block';
+      // open print dialog
+      window.print();
+    }
+
+    
+
+    // populate date field with today by default and wire live preview updates
+    (function init(){
+      const d = new Date().toISOString().slice(0,10);
+      document.getElementById('date').value = d;
+      document.getElementById('displayDate').textContent = formatDateISO(d);
+      const receiptEl = document.getElementById('displayReceiptNo');
+      if(!receiptEl.textContent) receiptEl.textContent = '—';
+
+      // initialize preview with current values (don't force new receipt number)
+      updatePreviewFields(false);
+
+      // listen to form changes and update preview live
+      const ids = ['payerName','nationality','idNumber','payerAddress','purpose','referenceNo','amount','currency','recipient','receiverOfficer','phoneEmail','notes','signature','date'];
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('input', () => updatePreviewFields(false));
+        el.addEventListener('change', () => updatePreviewFields(false));
+      });
+
+      // payment method radios
+      document.querySelectorAll('input[name="method"]').forEach(r => r.addEventListener('change', () => updatePreviewFields(false)));
+    })();
+  </script>
+</body>
+</html>

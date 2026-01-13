@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title> İçişleri Bakanlığı Ödeme Belgesi </title>
+<style>
+  :root{
+    --accent:#2b6cb0;
+    --muted:#666;
+    --paper:#ffffff;
+    --bg:#f3f6fb;
+    --danger:#c53030;
+    --frame:#d9e5f5;
+  }
+  body{
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background:var(--bg);
+    margin:0;
+    padding:30px;
+    color:#222;
+  }
+  .doc {
+    max-width:900px;
+    margin:0 auto;
+    background:var(--paper);
+    border:1px solid var(--frame);
+    box-shadow:0 6px 20px rgba(20,30,60,0.06);
+    padding:28px;
+    position:relative;
+  }
+  /* WATERMARK */
+  .watermark {
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%) rotate(-30deg);
+    font-size:76px;
+    color:rgba(0,0,0,0.06);
+    font-weight:800;
+    pointer-events:none;
+    user-select:none;
+    letter-spacing:10px;
+  }
+
+  header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #e8eef8;
+    padding-bottom:14px;
+    margin-bottom:18px;
+  }
+  .ministry {
+    display:flex;
+    gap:16px;
+    align-items:center;
+  }
+  .logo-placeholder{
+    width:78px;
+    height:78px;
+    border-radius:8px;
+    background:linear-gradient(135deg,#eaf3ff,#cfe4ff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--accent);
+    font-weight:800;
+    font-size:14px;
+    border:1px solid #d6e9ff;
+  }
+  .ministry h1{
+    margin:0;
+    font-size:18px;
+    color:var(--accent);
+    letter-spacing:0.2px;
+  }
+  .ministry p{
+    margin:0;
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .meta {
+    text-align:right;
+    font-size:13px;
+    color:var(--muted);
+  }
+
+  .content {
+    display:grid;
+    grid-template-columns: 1fr 340px;
+    gap:24px;
+  }
+
+  .left, .right {
+    background:#fbfdff;
+    border:1px solid #f0f6ff;
+    padding:16px;
+    border-radius:6px;
+  }
+
+  .field {
+    margin-bottom:14px;
+  }
+  .label{
+    font-size:13px;
+    color:var(--muted);
+    margin-bottom:6px;
+  }
+  .value{
+    font-size:15px;
+    color:#111;
+    font-weight:700;
+  }
+  .value small{ display:block; font-weight:400; color:var(--muted); font-size:13px; margin-top:6px;}
+
+  .two-cols {
+    display:flex;
+    gap:12px;
+  }
+
+  .bank {
+    font-size:13px;
+    color:#333;
+    margin-top:8px;
+    line-height:1.4;
+  }
+
+  footer{
+    margin-top:18px;
+    font-size:12px;
+    color:var(--muted);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+  }
+
+  .notice {
+    color:var(--danger);
+    font-weight:700;
+    font-size:12px;
+  }
+
+  /* signature */
+  .sig {
+    margin-top:18px;
+    display:flex;
+    gap:18px;
+    align-items:center;
+  }
+  .sig .box {
+    border-top:1px dashed #d7e4fb;
+    padding-top:8px;
+    width:240px;
+    font-size:13px;
+    color:var(--muted);
+  }
+
+  @media (max-width:880px){
+    .content{ grid-template-columns:1fr; }
+    .meta{ text-align:left; margin-top:12px; }
+  }
+  /* PDF action buttons */
+  .pdf-actions{ display:flex; gap:8px; align-items:center; }
+  .pdf-actions .btn{ background:var(--accent); color:#fff; border:none; padding:8px 12px; border-radius:6px; font-weight:700; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; }
+  .pdf-actions .btn.secondary{ background:#fff; color:var(--accent); border:1px solid var(--frame); font-weight:600; }
+</style>
+</head>
+<body>
+  <div class="doc" role="document">
+    <div class="watermark">CONFIDENTIAL</div>
+
+    <header>
+      <div class="ministry" aria-hidden="true">
+        <div class="logo-placeholder">İÇİŞLERİ</div>
+        <div>
+          <h1>T.C. İÇİŞLERİ BAKANLIĞI</h1>
+          <p>Payment & Financial Affairs • Ödeme İşleri Birimi</p>
+        </div>
+      </div>
+
+      <div class="meta" aria-label="document metadata">
+        <div><strong>Document</strong> : PAYMENT NOTICE </div>
+        <div><strong>Doc ID</strong> : 2025-0001</div>
+        <div><strong>Date</strong> : 24th November 2025</div>
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="left" aria-labelledby="payer-info">
+        <div class="field">
+          <div class="label">Ödeme Yapan / Payer</div>
+          <div class="value">JAMES STERLING</div>
+          <small class="muted"> ID: *******157</small>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme nedeni / Payment purpose</div>
+          <div class="value">Support / Yardım</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Tutar / Amount</div>
+          <div class="value">€4,000 </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme tarihi / Payment date</div>
+          <div class="value">7th November 2025</div>
+        </div>
+
+        <div class="field">
+          <div class="label">İşlem referansı / Transaction reference</div>
+          <div class="value">TRX-20250725-001</div>
+        </div>
+    <br>
+        <br>
+
+ <div class="field">
+          <div class="label">Ödeme Yapan / Payer</div>
+          <div class="value">Eija Hoffren</div>
+          <small class="muted"> ID: *******91758</small>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme nedeni / Payment purpose</div>
+          <div class="value">Family Support / Sosyal Yardım</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Tutar / Amount</div>
+          <div class="value">€2,000 </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme tarihi / Payment date</div>
+          <div class="value">7th November 2025</div>
+        </div>
+
+        <div class="field">
+          <div class="label">İşlem referansı / Transaction reference</div>
+          <div class="value">TRX-20250725-002</div>
+        </div>
+        <br>
+            <br>
+        <div class="field">
+          <div class="label">Ödeme Yapan / Payer</div>
+          <div class="value">Eija Maritta Hoffren</div>
+          <small class="muted"> ID: *******1758</small>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme nedeni / Payment purpose</div>
+          <div class="value">Family Support / Sosyal Yardım</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Tutar / Amount</div>
+          <div class="value">€3,000 </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme tarihi / Payment date</div>
+          <div class="value">9th November 2025</div>
+        </div>
+
+        <div class="field">
+          <div class="label">İşlem referansı / Transaction reference</div>
+          <div class="value">TRX-20250725-003</div>
+        </div>
+            <br>
+                <br>
+
+
+ <div class="field">
+          <div class="label">Ödeme Yapan / Payer</div>
+          <div class="value">Eija Hoffren</div>
+          <small class="muted"> ID: *******1758</small>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme nedeni / Payment purpose</div>
+          <div class="value">Family Support / Sosyal Yardım</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Tutar / Amount</div>
+          <div class="value">€3,000 </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme tarihi / Payment date</div>
+          <div class="value">13th November 2025</div>
+        </div>
+
+        <div class="field">
+          <div class="label">İşlem referansı / Transaction reference</div>
+          <div class="value">TRX-20250725-002</div>
+        </div>
+        <br>
+            <br>
+
+            <div class="field">
+          <div class="label">Ödeme Yapan / Payer</div>
+          <div class="value">Eija Hoffren</div>
+          <small class="muted"> ID: *******1758</small>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme nedeni / Payment purpose</div>
+          <div class="value">Family Support / Sosyal Yardım</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Tutar / Amount</div>
+          <div class="value">€3,000 </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme tarihi / Payment date</div>
+          <div class="value">17th November 2025</div>
+        </div>
+
+        <div class="field">
+          <div class="label">İşlem referansı / Transaction reference</div>
+          <div class="value">TRX-20250725-002</div>
+        </div>
+        <br>
+            <br>
+
+            <div class="field">
+          <div class="label">Ödeme Yapan / Payer</div>
+          <div class="value">Eija Hoffren</div>
+          <small class="muted"> ID: *******1758</small>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme nedeni / Payment purpose</div>
+          <div class="value">Family Support / Sosyal Yardım</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Tutar / Amount</div>
+          <div class="value">€3,000 </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme tarihi / Payment date</div>
+          <div class="value">17th November 2025</div>
+        </div>
+
+        <div class="field">
+          <div class="label">İşlem referansı / Transaction reference</div>
+          <div class="value">TRX-20250725-003</div>
+        </div>
+        <br>
+            <br>
+
+<div class="field">
+          <div class="label">Ödeme Yapan / Payer</div>
+          <div class="value">JAMES STERLING</div>
+          <small class="muted"> ID: *******157</small>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme nedeni / Payment purpose</div>
+          <div class="value">Support / Sosyal Yardım</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Tutar / Amount</div>
+          <div class="value">€2,000 </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme tarihi / Payment date</div>
+          <div class="value">17th November 2025</div>
+        </div>
+
+        <div class="field">
+          <div class="label">İşlem referansı / Transaction reference</div>
+          <div class="value">TRX-20250725-001</div>
+        </div>
+        <br>
+            <br>
+
+            <div class="field">
+          <div class="label">Ödeme Yapan / Payer</div>
+          <div class="value">Eija Hoffren</div>
+          <small class="muted"> ID: *******1758</small>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme nedeni / Payment purpose</div>
+          <div class="value"> Family Support / Sosyal Yardım</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Tutar / Amount</div>
+          <div class="value">€3,000 </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme tarihi / Payment date</div>
+          <div class="value">18th November 2025</div>
+        </div>
+
+        <div class="field">
+          <div class="label">İşlem referansı / Transaction reference</div>
+          <div class="value">TRX-20250725-002</div>
+        </div>
+        <br>
+            <br>
+
+              <div class="field">
+          <div class="label">Ödeme Yapan / Payer</div>
+          <div class="value">Eija Hoffren</div>
+          <small class="muted"> ID: *******1758</small>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme nedeni / Payment purpose</div>
+          <div class="value"> Family Support / Sosyal Yardım</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Tutar / Amount</div>
+          <div class="value">€3,000 </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme tarihi / Payment date</div>
+          <div class="value">18th November 2025</div>
+        </div>
+
+        <div class="field">
+          <div class="label">İşlem referansı / Transaction reference</div>
+          <div class="value">TRX-20250725-002</div>
+        </div>
+        <br>
+            <br>
+
+              <div class="field">
+          <div class="label">Ödeme Yapan / Payer</div>
+          <div class="value">Eija Hoffren</div>
+          <small class="muted"> ID: *******1758</small>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme nedeni / Payment purpose</div>
+          <div class="value"> Family Support / Sosyal Yardım</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Tutar / Amount</div>
+          <div class="value">€3,000 </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme tarihi / Payment date</div>
+          <div class="value">19th November 2025</div>
+        </div>
+
+        <div class="field">
+          <div class="label">İşlem referansı / Transaction reference</div>
+          <div class="value">TRX-20250725-002</div>
+        </div>
+        <br>
+            <br>
+
+              <div class="field">
+          <div class="label">Ödeme Yapan / Payer</div>
+          <div class="value">Eija Hoffren</div>
+          <small class="muted"> ID: *******1758</small>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme nedeni / Payment purpose</div>
+          <div class="value"> Family Support / Sosyal Yardım</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Tutar / Amount</div>
+          <div class="value">€3,000 </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme tarihi / Payment date</div>
+          <div class="value">19th November 2025</div>
+        </div>
+
+        <div class="field">
+          <div class="label">İşlem referansı / Transaction reference</div>
+          <div class="value">TRX-20250725-002</div>
+        </div>
+        <br>
+            <br>
+
+              <div class="field">
+          <div class="label">Ödeme Yapan / Payer</div>
+          <div class="value">Eija Hoffren</div>
+          <small class="muted"> ID: *******1758</small>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme nedeni / Payment purpose</div>
+          <div class="value"> Family Support / Sosyal Yardım</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Tutar / Amount</div>
+          <div class="value">€3,000 </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme tarihi / Payment date</div>
+          <div class="value">20th November 2025</div>
+        </div>
+
+        <div class="field">
+          <div class="label">İşlem referansı / Transaction reference</div>
+          <div class="value">TRX-20250725-002</div>
+        </div>
+        <br>
+            <br>
+ <div class="field">
+          <div class="label">Ödeme Yapan / Payer</div>
+          <div class="value">Eija Hoffren</div>
+          <small class="muted"> ID: *******1758</small>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme nedeni / Payment purpose</div>
+          <div class="value"> Family Support / Sosyal Yardım</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Tutar / Amount</div>
+          <div class="value">€1,000 </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Ödeme tarihi / Payment date</div>
+          <div class="value">21st November 2025</div>
+        </div>
+
+        <div class="field">
+          <div class="label">İşlem referansı / Transaction reference</div>
+          <div class="value">TRX-20250725-002</div>
+        </div>
+        <br>
+            <br>
+
+
+        <div class="field">
+          <div class="label">Açıklama / Notes</div>
+          <div class="value" style="font-weight:500">This is a confidential official Ministry document.</div>
+        </div>
+
+        <div class="sig" aria-hidden="true">
+          <div class="box">Prepared by (name & unit)</div>
+          <div class="box">Authorized signature</div>
+        </div>
+      </section>
+
+
+
+      
+      <!--<aside class="right" aria-labelledby="bank-info">
+        <div class="field">
+          <div class="label">Beneficiary / Alıcı</div>
+          <div class="value">WYJK ECommerce LLC</div>
+          <div class="bank">IBAN: GB00 XXXX XXXX XXXX XXXX<br>Bank: DEUTSCHEBANK AG, LONDON</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Receiving unit / Birim</div>
+          <div class="value">Ministry Treasury Account</div>
+          <div class="bank">Account No: 000-000-000</div>
+        </div><!-->
+
+        <div class="field">
+          <div class="label">Payment method / Ödeme yöntemi</div>
+          <div class="value">Bank Transfer / Havale</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Payment status / Durum</div>
+          <div class="value"> 35,000 Euros </div>
+        </div>
+ <div class="field">
+          <div class="label">Clearance And Stamp Fee</div>
+          <div class="value"> 1,000 Euros </div>
+        </div>
+        <div class="field">
+          <div class="label">Processing status / Durum</div>
+          <div class="value"> Full payment is completed 36,000 Euros </div>
+        </div>
+
+        <div class="field">
+            <div class="label">Approved by / Onaylayan</div>
+          <div class="value">Finance Unit </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div>
+        <small style="color:#444">Ministry of Interior — Payment & Financial Affairs</small><br>
+         </div>
+        <div class="notice">This is a system-generated document. No signature is required.</div>
+    </footer>
+  </div>
+   <!-- PDF actions: download link (points to ministry.pdf) and print/save as PDF -->
+      <div style="position:absolute; top:28px; right:28px;">
+        <div class="pdf-actions" aria-hidden="false">
+          <a href="ministry.pdf" download class="btn" aria-label="Download PDF of this document">Download PDF</a>
+          <button type="button" class="btn secondary" onclick="window.print();" aria-label="Print or save as PDF">Print / Save PDF</button>
+        </div>
+      </div>
+</body>
+</html>
